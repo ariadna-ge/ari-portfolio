@@ -30,6 +30,8 @@ import {
 } from "react-icons/si";
 
 import { TbBrandCSharp } from "react-icons/tb";
+import { useLanguage } from "../../i18n/LanguageProvider";
+import NewspaperTitle from "../../i18n/NewspaperTitle";
 
 // react-icons no incluye Canva: círculo con una "C" para mantener el estilo
 const CanvaIcon: IconType = ({ size = 28, className }) => (
@@ -50,14 +52,14 @@ const CanvaIcon: IconType = ({ size = 28, className }) => (
 
 type Tech ={ name: string; Icon: IconType };
 type Section = {
-  title: string;
+  key: "frontend" | "backend" | "ux" | "data" | "cloud";
   techs: Tech[];
   lowered?: boolean;
 };
 
 const sections: Section[] = [
   {
-    title: "Frontend",
+    key: "frontend",
     techs: [
       { name: "HTML", Icon: FaHtml5 },
       { name: "CSS", Icon: FaCss3Alt },
@@ -69,7 +71,7 @@ const sections: Section[] = [
     ],
   },
   {
-    title: "Backend",
+    key: "backend",
     lowered: true,
     techs: [
       { name: "Node.js", Icon: FaNodeJs },
@@ -81,7 +83,7 @@ const sections: Section[] = [
     ],
   },
   {
-    title: "UX/UI",
+    key: "ux",
     techs: [
       { name: "Figma", Icon: FaFigma },
       { name: "Canva", Icon: CanvaIcon },
@@ -89,7 +91,7 @@ const sections: Section[] = [
     ],
   },
   {
-    title: "DATA",
+    key: "data",
     lowered: true,
     techs: [
       { name: "MySQL", Icon: SiMysql },
@@ -98,7 +100,7 @@ const sections: Section[] = [
     ],
   },
   {
-    title: "Cloud and Tools",
+    key: "cloud",
     techs: [
       { name: "Git", Icon: FaGitAlt },
       { name: "GitHub", Icon: FaGithub },
@@ -139,57 +141,26 @@ const COLORS = {
   white: "var(--white)",
 };
 
-const TITLE_LETTERS: ({ char: string; variant: string } | null)[] = [
-  { char: "s", variant: "plain" },
-  { char: "k", variant: "dots" },
-  { char: "i", variant: "paper" },
-  { char: "l", variant: "shadow" },
-  { char: "l", variant: "stripes" },
-  { char: "s", variant: "plainTwo" },
-];
-
-
-function NewspaperTitle() {
-  return (
-    <h2 className="newspaper" aria-label="Skills">
-      {TITLE_LETTERS.map((letter, i) =>
-        letter ? (
-          <span
-            key={i}
-            aria-hidden="true"
-            className={`letter ${letter.variant}`}
-          >
-            {letter.char}
-          </span>
-        ) : (
-          <span key={i} aria-hidden="true">
-            &nbsp;
-          </span>
-        )
-      )}
-    </h2>
-  );
-}
-
 export default function Skills() {
+  const { t } = useLanguage();
   return (
     <section id="skills" className="w-full bg-white px-4 py-16">
       {/* Newspaper-style title */}
       <div className="mb-12 flex justify-center">
-        <NewspaperTitle />
+        <NewspaperTitle text={t.skills.title} />
       </div>
 
       <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-6 gap-y-12 lg:flex-nowrap lg:gap-x-4">
-        {sections.map(({ title, techs, lowered }) => (
+        {sections.map(({ key, techs, lowered }) => (
           <div
-            key={title}
+            key={key}
             className={`flex w-48 flex-col items-center ${
               lowered ? "lg:mt-10" : ""
             }`}
           >
             {/* Círculo */}
             <div className="flex h-28 w-28 items-center justify-center rounded-full bg-[#ED57A3] px-3 text-center text-base font-bold leading-tight text-white">
-              {title}
+              {t.skills.sections[key]}
             </div>
 
             {/* Flecha */}
@@ -201,7 +172,7 @@ export default function Skills() {
             <ul className="mt-3 flex flex-wrap justify-center gap-x-2 gap-y-3">
               {techs.map(({ name, Icon }) => (
                 <li
-                  key={`${title}-${name}`}
+                  key={`${key}-${name}`}
                   className="flex w-14 flex-col items-center gap-1 text-center"
                 >
                   <Icon

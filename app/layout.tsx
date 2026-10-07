@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { LanguageProvider } from "./i18n/LanguageProvider";
 
 const boldonse = localFont({
   src: "../public/fonts/Boldonse-Regular.ttf",
@@ -31,10 +32,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
-      className={`${boldonse.variable} ${instrumentSerif.variable} ${fahkwang.variable} h-full antialiased`}
+      lang="es"
+      className={`${boldonse.variable} ${instrumentSerif.variable} ${fahkwang.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col"><LanguageProvider>{children}</LanguageProvider></body>
     </html>
   );
 }

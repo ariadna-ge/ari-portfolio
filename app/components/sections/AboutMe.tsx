@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { useLanguage } from "../../i18n/LanguageProvider";
+import NewspaperTitle from "../../i18n/NewspaperTitle";
 
 const headingFont = { className: "font-[family-name:var(--font-boldonse)]" };
 const bodyFont = { className: "font-[family-name:var(--font-fahkwang)]" };
@@ -16,50 +20,6 @@ const COLORS = {
   folderText: "var(--color-1)",
   white: "var(--white)",
 };
-
-const EDUCATION = [
-  {
-    degree: "B.S. in Computer Engineering",
-    detail: "UNAM · graduated 2026",
-  },
-  {
-    degree: "Technical Degree in Web Application Development & Databases",
-    detail: "UNAM · graduated 2021",
-  },
-];
-
-const TITLE_LETTERS: ({ char: string; variant: string } | null)[] = [
-  { char: "A", variant: "plain" },
-  { char: "b", variant: "dots" },
-  { char: "o", variant: "paper" },
-  { char: "u", variant: "shadow" },
-  { char: "t", variant: "stripes" },
-  null,
-  { char: "m", variant: "plainTwo" },
-  { char: "e", variant: "solid" },
-];
-
-function NewspaperTitle() {
-  return (
-    <h2 className="newspaper" aria-label="About me">
-      {TITLE_LETTERS.map((letter, i) =>
-        letter ? (
-          <span
-            key={i}
-            aria-hidden="true"
-            className={`letter ${letter.variant}`}
-          >
-            {letter.char}
-          </span>
-        ) : (
-          <span key={i} aria-hidden="true">
-            &nbsp;
-          </span>
-        )
-      )}
-    </h2>
-  );
-}
 
 /* Folder shape: top-left tab with a diagonal corner */
 function FolderShape() {
@@ -113,6 +73,7 @@ function EducationCard({ degree, detail }: { degree: string; detail: string }) {
 }
 
 export default function AboutMe() {
+  const { t } = useLanguage();
   return (
     <section
       id="about"
@@ -125,7 +86,7 @@ export default function AboutMe() {
     >
       {/* Newspaper-style title */}
       <div className="absolute z-10" style={{ left: "3.9%", top: "6%" }}>
-        <NewspaperTitle />
+        <NewspaperTitle text={t.about.title} />
       </div>
 
       {/* Intro text */}
@@ -137,27 +98,23 @@ export default function AboutMe() {
           className={`${serifFont.className} m-0`}
           style={{ fontSize: "2.4cqw", lineHeight: 1.45, fontWeight: 400 }}
         >
-          Hi I&apos;m Ariadna!
+          {t.about.greeting}
           <br />
-          I build, analyze &amp; keep learning.
+          {t.about.tagline}
         </h2>
 
         <p
           className={`${bodyFont.className} m-0`}
           style={{ fontSize: "1.45cqw", lineHeight: 1.58, marginTop: "2.6cqw" }}
         >
-          I&apos;m a Software Developer building web applications across the
-          frontend and backend. From interfaces to APIs and databases, I enjoy
-          understanding how the different pieces come together. I&apos;m also
-          exploring the world of data, developing my skills in analysis and
-          visualization to turn information into meaningful insights.
+          {t.about.paragraph}
         </p>
 
         <p
           className={`${bodyFont.className} m-0 font-bold`}
           style={{ fontSize: "1.45cqw", lineHeight: 1.58, marginTop: "2.6cqw" }}
         >
-          Code + Data + Curiosity are the things that keep me building.
+          {t.about.motto}
         </p>
       </div>
 
@@ -167,7 +124,7 @@ export default function AboutMe() {
       >
         <Image
           src={AVATAR_SRC}
-          alt="Illustration of Ariadna thinking"
+          alt={t.about.avatarAlt}
           fill
           sizes="32vw"
           className="object-contain object-bottom"
@@ -188,14 +145,14 @@ export default function AboutMe() {
             color: COLORS.heading,
           }}
         >
-          EDUCATION
+          {t.about.education}
         </h2>
 
         <ul
           className="m-0 flex w-full list-none flex-col p-0"
           style={{ gap: "2cqw", marginTop: "4cqw" }}
         >
-          {EDUCATION.map((item) => (
+          {t.about.degrees.map((item) => (
             <EducationCard key={item.degree} {...item} />
           ))}
         </ul>

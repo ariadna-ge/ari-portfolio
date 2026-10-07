@@ -1,4 +1,8 @@
+"use client";
+
 import { FaGithub, FaLinkedinIn, FaEnvelope } from "react-icons/fa";
+import { useLanguage } from "../../i18n/LanguageProvider";
+import NewspaperTitle from "../../i18n/NewspaperTitle";
 
 const SOCIALS = [
   { label: "GitHub", href: "https://github.com/ariadna-ge", Icon: FaGithub },
@@ -25,42 +29,8 @@ const COLORS = {
   white: "var(--white)",
 };
 
-const TITLE_LETTERS: ({ char: string; variant: string } | null)[] = [
-  { char: "c", variant: "plain" },
-  { char: "o", variant: "dots" },
-  { char: "n", variant: "paper" },
-  { char: "t", variant: "shadow" },
-  { char: "a", variant: "stripes" },
-  { char: "c", variant: "plainTwo" },
-  { char: "t", variant: "solid" },
-  null,
-  { char: "m", variant: "plain" },
-  { char: "e", variant: "dots" },
-];
-
-function NewspaperTitle() {
-  return (
-    <h2 className="newspaper" aria-label="Contact me">
-      {TITLE_LETTERS.map((letter, i) =>
-        letter ? (
-          <span
-            key={i}
-            aria-hidden="true"
-            className={`letter ${letter.variant}`}
-          >
-            {letter.char}
-          </span>
-        ) : (
-          <span key={i} aria-hidden="true">
-            &nbsp;
-          </span>
-        )
-      )}
-    </h2>
-  );
-}
-
 export default function ContactMe() {
+  const { t } = useLanguage();
   return (
     <section
       id="contact"
@@ -73,7 +43,7 @@ export default function ContactMe() {
     >
       {/* Newspaper-style title */}
       <div className="absolute z-10" style={{ left: "3.9%", top: "6%" }}>
-        <NewspaperTitle />
+        <NewspaperTitle text={t.contact.title} />
       </div>
 
       {/* Call to action + social links */}
@@ -89,8 +59,9 @@ export default function ContactMe() {
             color: COLORS.heading,
           }}
         >
-          Don’t be shy!
-          <br />I love meeting new people.
+          {t.contact.cta[0]}
+          <br />
+          {t.contact.cta[1]}
         </p>
 
         <ul

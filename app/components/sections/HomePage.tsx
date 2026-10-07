@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import type { CSSProperties } from "react";
+import { useLanguage } from "../../i18n/LanguageProvider";
 
 const titleFont = { className: "font-[family-name:var(--font-boldonse)]" };
 const nameFont = { className: "font-[family-name:var(--font-fahkwang)]" };
@@ -49,7 +52,7 @@ function VerticalWord({ word }: { word: string }) {
     <span className="flex flex-col items-center" aria-hidden="true">
       {word.split("").map((letter, i) => (
         <span key={i} style={{ lineHeight: 1.05 }}>
-          {letter}
+          {letter === " " ? "\u00a0" : letter}
         </span>
       ))}
     </span>
@@ -57,8 +60,10 @@ function VerticalWord({ word }: { word: string }) {
 }
 
 export default function PortfolioHero() {
+  const { t } = useLanguage();
   return (
     <section
+      id="home"
       className="relative w-full overflow-hidden"
       style={{
         aspectRatio: "16 / 9",
@@ -78,7 +83,7 @@ export default function PortfolioHero() {
       >
         <Image
           src={AVATAR_SRC}
-          alt="Girl with a laptop"
+          alt={t.hero.imageAlt}
           fill
           priority
           sizes="44vw"
@@ -86,7 +91,7 @@ export default function PortfolioHero() {
         />
       </div>
       <h1 className={`${titleFont.className} absolute inset-0 z-10 m-0`}>
-        <span className="sr-only">Portfolio</span>
+        <span className="sr-only">{t.hero.portfolio}</span>
         {TITLE_LETTERS.map((l, i) => (
           <span
             key={i}
@@ -113,10 +118,10 @@ export default function PortfolioHero() {
           color: COLORS.pink,
         }}
       >
-        <span className="sr-only">Software Developer</span>
-        <VerticalWord word="SOFTWARE" />
+        <span className="sr-only">{t.hero.role}</span>
+        <VerticalWord word={t.hero.roleWords[0]} />
         <span style={{ marginTop: "13.5cqw" }}>
-          <VerticalWord word="DEVELOPER" />
+          <VerticalWord word={t.hero.roleWords[1]} />
         </span>
       </p>
       <div

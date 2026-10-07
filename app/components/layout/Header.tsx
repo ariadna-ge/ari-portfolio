@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import Menu from "./Menu";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Header() {
   return (
@@ -18,7 +19,10 @@ export default function Header() {
           </span>
         </Link>
 
-        <Menu />
+        <div className="flex items-center gap-4">
+          <LanguageSwitcher />
+          <Menu />
+        </div>
       </div>
     </header>
   );
