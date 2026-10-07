@@ -39,8 +39,8 @@ const halftoneStyle: CSSProperties = {
     radial-gradient(circle, ${COLORS.dots} 42%, transparent 44%),
     radial-gradient(circle, ${COLORS.dots} 42%, transparent 44%)
   `,
-  backgroundSize: "2.4cqw 2.4cqw",
-  backgroundPosition: "0 0, 1.2cqw 1.2cqw",
+  backgroundSize: "max(2.4cqw, 12px) max(2.4cqw, 12px)",
+  backgroundPosition: "0 0, max(1.2cqw, 6px) max(1.2cqw, 6px)",
   WebkitMaskImage:
     "radial-gradient(ellipse 75% 85% at 45% 20%, #000 35%, transparent 90%)",
   maskImage:
@@ -66,7 +66,6 @@ export default function PortfolioHero() {
       id="home"
       className="relative w-full overflow-hidden"
       style={{
-        aspectRatio: "16 / 9",
         backgroundColor: COLORS.bg,
         containerType: "inline-size",
       }}
@@ -76,6 +75,60 @@ export default function PortfolioHero() {
         className="pointer-events-none absolute inset-0"
         style={halftoneStyle}
       />
+
+      <div
+        className="relative lg:mx-auto lg:aspect-[16/9] lg:w-[80%] lg:max-w-[1100px]"
+        style={{ containerType: "inline-size" }}
+      >
+
+      {/* Mobile / tablet: flow layout */}
+      <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-10 text-center sm:py-14 lg:hidden">
+        <h1
+          className={`${titleFont.className} m-0 text-[clamp(3rem,17vw,6rem)] leading-[1.05]`}
+          style={{ color: COLORS.pink }}
+        >
+          <span className="sr-only">{t.hero.portfolio}</span>
+          <span aria-hidden="true" className="block">
+            PoRt
+          </span>
+          <span aria-hidden="true" className="block">
+            folio
+          </span>
+        </h1>
+
+        <div className="relative aspect-square w-4/5 max-w-sm sm:max-w-md">
+          <Image
+            src={AVATAR_SRC}
+            alt={t.hero.imageAlt}
+            fill
+            priority
+            sizes="(min-width: 640px) 28rem, 80vw"
+            className="object-contain object-top"
+          />
+        </div>
+
+        <p
+          className={`${labelFont.className} m-0 text-xl tracking-wide sm:text-3xl`}
+          style={{ color: COLORS.pink }}
+        >
+          {t.hero.roleWords[0]} {t.hero.roleWords[1]}
+        </p>
+
+        <div
+          className="w-full max-w-md px-4 py-3"
+          style={{ border: `2px solid ${COLORS.pink}` }}
+        >
+          <h2
+            className={`${nameFont.className} m-0 text-xs uppercase tracking-[0.12em] sm:text-base`}
+            style={{ color: COLORS.white }}
+          >
+            Ariadna Denisse Garcia Estrada
+          </h2>
+        </div>
+      </div>
+
+      {/* Desktop: absolute composition scaled with the container */}
+      <div className="hidden lg:block">
       {/* Image */}
       <div
         className="absolute"
@@ -144,6 +197,8 @@ export default function PortfolioHero() {
         >
           Ariadna Denisse Garcia Estrada
         </h2>
+      </div>
+      </div>
       </div>
     </section>
   );

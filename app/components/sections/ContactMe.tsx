@@ -35,26 +35,22 @@ export default function ContactMe() {
     <section
       id="contact"
       className="relative w-full overflow-hidden"
-      style={{
-        aspectRatio: "16 / 9",
-        backgroundColor: COLORS.bg,
-        containerType: "inline-size",
-      }}
+      style={{ backgroundColor: COLORS.bg }}
     >
+      <div
+        className="relative flex w-full flex-col gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:mx-auto lg:block lg:aspect-[16/9] lg:w-[80%] lg:max-w-[1100px] lg:p-0"
+        style={{ containerType: "inline-size" }}
+      >
       {/* Newspaper-style title */}
-      <div className="absolute z-10" style={{ left: "3.9%", top: "6%" }}>
+      <div className="z-10 self-center lg:absolute lg:left-[3.9%] lg:top-[6%] lg:self-auto">
         <NewspaperTitle text={t.contact.title} />
       </div>
 
       {/* Call to action + social links */}
-      <div
-        className="absolute z-10 flex flex-col"
-        style={{ left: "3.9%", top: "38%", width: "60cqw", gap: "3.5cqw" }}
-      >
+      <div className="z-10 mx-auto flex w-full max-w-2xl flex-col gap-6 text-center lg:absolute lg:left-[3.9%] lg:top-[38%] lg:mx-0 lg:w-[60cqw] lg:max-w-none lg:gap-[3.5cqw] lg:text-left">
         <p
-          className={`${headingFont.className} m-0 uppercase`}
+          className={`${headingFont.className} m-0 text-lg uppercase sm:text-3xl lg:text-[4.2cqw]`}
           style={{
-            fontSize: "4.2cqw",
             lineHeight: 1.25,
             color: COLORS.heading,
           }}
@@ -65,25 +61,25 @@ export default function ContactMe() {
         </p>
 
         <ul
-          className={`${bodyFont.className} m-0 flex list-none p-0`}
-          style={{ gap: "3cqw", fontSize: "1.6cqw", color: COLORS.text }}
+          className={`${bodyFont.className} m-0 flex list-none flex-wrap justify-center gap-x-3 gap-y-3 p-0 text-sm sm:gap-x-5 sm:text-base lg:justify-start lg:gap-[3cqw] lg:text-[1.6cqw]`}
+          style={{ color: COLORS.text }}
         >
           {SOCIALS.map(({ label, href, Icon }, i) => (
-            <li key={label} className="flex items-center" style={{ gap: "3cqw" }}>
+            <li key={label} className="flex items-center gap-3 sm:gap-5 lg:gap-[3cqw]">
               {i > 0 && <span aria-hidden="true">·</span>}
               <a
                 href={href}
                 target={href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="flex items-center transition-opacity hover:opacity-70"
-                style={{ gap: "0.8cqw" }}
+                className="flex items-center gap-2 transition-opacity hover:opacity-70 lg:gap-[0.8cqw]"
               >
-                <Icon style={{ width: "2.2cqw", height: "2.2cqw" }} aria-hidden="true" />
+                <Icon className="h-5 w-5 lg:h-[2.2cqw] lg:w-[2.2cqw]" aria-hidden="true" />
                 {label}
               </a>
             </li>
           ))}
         </ul>
+      </div>
       </div>
     </section>
   );

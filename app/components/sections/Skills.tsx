@@ -144,18 +144,18 @@ const COLORS = {
 export default function Skills() {
   const { t } = useLanguage();
   return (
-    <section id="skills" className="w-full bg-white px-4 py-16">
+    <section id="skills" className="w-full bg-white px-4 py-12 sm:px-8 sm:py-16">
       {/* Newspaper-style title */}
-      <div className="mb-12 flex justify-center">
+      <div className="mb-8 flex justify-center sm:mb-12">
         <NewspaperTitle text={t.skills.title} />
       </div>
 
-      <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-6 gap-y-12 lg:flex-nowrap lg:gap-x-4">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-6 gap-y-12 xl:flex-nowrap xl:gap-x-4">
         {sections.map(({ key, techs, lowered }) => (
           <div
             key={key}
             className={`flex w-48 flex-col items-center ${
-              lowered ? "lg:mt-10" : ""
+              lowered ? "xl:mt-10" : ""
             }`}
           >
             {/* Círculo */}

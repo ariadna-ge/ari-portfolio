@@ -46,9 +46,8 @@ function EducationCard({ degree, detail }: { degree: string; detail: string }) {
         style={{ padding: "16% 8% 6%" }}
       >
         <h3
-          className={`${bodyFont.className} m-0`}
+          className={`${bodyFont.className} m-0 text-[0.95rem] lg:text-[1.8cqw]`}
           style={{
-            fontSize: "1.8cqw",
             lineHeight: 1.25,
             letterSpacing: "0.01em",
             color: COLORS.folderText,
@@ -57,11 +56,9 @@ function EducationCard({ degree, detail }: { degree: string; detail: string }) {
           {degree}
         </h3>
         <p
-          className={`${serifFont.className} m-0`}
+          className={`${serifFont.className} m-0 mt-2 text-[0.85rem] lg:mt-[0.9cqw] lg:text-[1.5cqw]`}
           style={{
-            fontSize: "1.5cqw",
             letterSpacing: "0.06em",
-            marginTop: "0.9cqw",
             color: COLORS.white,
           }}
         >
@@ -78,25 +75,25 @@ export default function AboutMe() {
     <section
       id="about"
       className="relative w-full overflow-hidden"
-      style={{
-        aspectRatio: "16 / 9",
-        backgroundColor: COLORS.bg,
-        containerType: "inline-size",
-      }}
+      style={{ backgroundColor: COLORS.bg }}
     >
+      <div
+        className="relative flex w-full flex-col gap-8 px-5 py-10 sm:px-8 lg:mx-auto lg:block lg:aspect-[16/9] lg:w-[80%] lg:max-w-[1100px] lg:p-0"
+        style={{ containerType: "inline-size" }}
+      >
       {/* Newspaper-style title */}
-      <div className="absolute z-10" style={{ left: "3.9%", top: "6%" }}>
+      <div className="z-10 self-center lg:absolute lg:left-[3.9%] lg:top-[6%] lg:self-auto">
         <NewspaperTitle text={t.about.title} />
       </div>
 
       {/* Intro text */}
       <div
-        className="absolute"
-        style={{ left: "3.9%", top: "27.5%", width: "39cqw", color: COLORS.text }}
+        className="mx-auto w-full max-w-2xl lg:absolute lg:left-[3.9%] lg:top-[27.5%] lg:mx-0 lg:w-[39cqw] lg:max-w-none"
+        style={{ color: COLORS.text }}
       >
         <h2
-          className={`${serifFont.className} m-0`}
-          style={{ fontSize: "2.4cqw", lineHeight: 1.45, fontWeight: 400 }}
+          className={`${serifFont.className} m-0 text-xl sm:text-2xl lg:text-[2.4cqw]`}
+          style={{ lineHeight: 1.45, fontWeight: 400 }}
         >
           {t.about.greeting}
           <br />
@@ -104,42 +101,35 @@ export default function AboutMe() {
         </h2>
 
         <p
-          className={`${bodyFont.className} m-0`}
-          style={{ fontSize: "1.45cqw", lineHeight: 1.58, marginTop: "2.6cqw" }}
+          className={`${bodyFont.className} m-0 mt-4 text-sm sm:text-base lg:mt-[2.6cqw] lg:text-[1.45cqw]`}
+          style={{ lineHeight: 1.58 }}
         >
           {t.about.paragraph}
         </p>
 
         <p
-          className={`${bodyFont.className} m-0 font-bold`}
-          style={{ fontSize: "1.45cqw", lineHeight: 1.58, marginTop: "2.6cqw" }}
+          className={`${bodyFont.className} m-0 mt-4 text-sm font-bold sm:text-base lg:mt-[2.6cqw] lg:text-[1.45cqw]`}
+          style={{ lineHeight: 1.58 }}
         >
           {t.about.motto}
         </p>
       </div>
 
-      <div
-        className="absolute bottom-0"
-        style={{ left: "38%", width: "35cqw", height: "90%" }}
-      >
+      <div className="relative mx-auto h-72 w-full max-w-sm sm:h-96 lg:absolute lg:bottom-0 lg:left-[38%] lg:mx-0 lg:h-[90%] lg:w-[35cqw] lg:max-w-none">
         <Image
           src={AVATAR_SRC}
           alt={t.about.avatarAlt}
           fill
-          sizes="32vw"
+          sizes="(min-width: 1024px) 32vw, (min-width: 640px) 24rem, 90vw"
           className="object-contain object-bottom"
         />
       </div>
 
       {/* Education */}
-      <div
-        className="absolute flex flex-col items-center"
-        style={{ left: "72%", top: "10%", width: "25cqw" }}
-      >
+      <div className="flex flex-col items-center lg:absolute lg:left-[72%] lg:top-[10%] lg:w-[25cqw]">
         <h2
-          className={`${headingFont.className} m-0`}
+          className={`${headingFont.className} m-0 text-2xl sm:text-3xl lg:text-[3cqw]`}
           style={{
-            fontSize: "3cqw",
             lineHeight: 1,
             letterSpacing: "0.08em",
             color: COLORS.heading,
@@ -149,13 +139,13 @@ export default function AboutMe() {
         </h2>
 
         <ul
-          className="m-0 flex w-full list-none flex-col p-0"
-          style={{ gap: "2cqw", marginTop: "4cqw" }}
+          className="m-0 mt-6 flex w-full max-w-sm list-none flex-col gap-4 p-0 lg:mt-[4cqw] lg:max-w-none lg:gap-[2cqw]"
         >
           {t.about.degrees.map((item) => (
             <EducationCard key={item.degree} {...item} />
           ))}
         </ul>
+      </div>
       </div>
     </section>
   );
