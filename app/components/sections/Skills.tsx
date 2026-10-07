@@ -32,6 +32,7 @@ import {
 import { TbBrandCSharp } from "react-icons/tb";
 import { useLanguage } from "../../i18n/LanguageProvider";
 import NewspaperTitle from "../../i18n/NewspaperTitle";
+import Reveal from "../ui/Reveal";
 
 // react-icons no incluye Canva: círculo con una "C" para mantener el estilo
 const CanvaIcon: IconType = ({ size = 28, className }) => (
@@ -125,9 +126,10 @@ function Arrow() {
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
+      className="draw"
     >
-      <path d="M24 4 C23 20, 25 36, 24 58" />
-      <path d="M6 42 L24 60 L42 42" />
+      <path pathLength={1} d="M24 4 C23 20, 25 36, 24 58" />
+      <path pathLength={1} d="M6 42 L24 60 L42 42" />
     </svg>
   );
 }
@@ -147,21 +149,31 @@ export default function Skills() {
     <section id="skills" className="w-full bg-white px-4 py-12 sm:px-8 sm:py-16">
       {/* Newspaper-style title */}
       <div className="mb-8 flex justify-center sm:mb-12">
-        <NewspaperTitle text={t.skills.title} />
+        <Reveal variant="pop">
+          <NewspaperTitle text={t.skills.title} />
+        </Reveal>
       </div>
 
       <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-6 gap-y-12 xl:flex-nowrap xl:gap-x-4">
-        {sections.map(({ key, techs, lowered }) => (
-          <div
+        {sections.map(({ key, techs, lowered }, col) => (
+          <Reveal
             key={key}
+            variant="up"
+            threshold={0.1}
+            delay={col * 120}
             className={`flex w-48 flex-col items-center ${
               lowered ? "xl:mt-10" : ""
             }`}
           >
             {/* Círculo */}
-            <div className="flex h-28 w-28 items-center justify-center rounded-full bg-[#ED57A3] px-3 text-center text-base font-bold leading-tight text-white">
+            <Reveal
+              variant="pop"
+              delay={col * 120 + 150}
+              threshold={0}
+              className="flex h-28 w-28 items-center justify-center rounded-full bg-[#ED57A3] px-3 text-center text-base font-bold leading-tight text-white"
+            >
               {t.skills.sections[key]}
-            </div>
+            </Reveal>
 
             {/* Flecha */}
             <div className="mt-2">
@@ -170,8 +182,12 @@ export default function Skills() {
 
             {/* Iconos */}
             <ul className="mt-3 flex flex-wrap justify-center gap-x-2 gap-y-3">
-              {techs.map(({ name, Icon }) => (
-                <li
+              {techs.map(({ name, Icon }, i) => (
+                <Reveal
+                  as="li"
+                  variant="pop"
+                  threshold={0}
+                  delay={col * 120 + 500 + i * 90}
                   key={`${key}-${name}`}
                   className="flex w-14 flex-col items-center gap-1 text-center"
                 >
@@ -183,10 +199,10 @@ export default function Skills() {
                   <span className="text-[11px] font-medium text-neutral-700">
                     {name}
                   </span>
-                </li>
+                </Reveal>
               ))}
             </ul>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

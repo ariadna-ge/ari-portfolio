@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useLanguage } from "../../i18n/LanguageProvider";
 import NewspaperTitle from "../../i18n/NewspaperTitle";
+import Reveal from "../ui/Reveal";
+import Typewriter from "../ui/Typewriter";
 
 const headingFont = { className: "font-[family-name:var(--font-boldonse)]" };
 const bodyFont = { className: "font-[family-name:var(--font-fahkwang)]" };
@@ -37,16 +39,30 @@ function FolderShape() {
   );
 }
 
-function EducationCard({ degree, detail }: { degree: string; detail: string }) {
+function EducationCard({
+  degree,
+  detail,
+  delay,
+}: {
+  degree: string;
+  detail: string;
+  delay: number;
+}) {
   return (
-    <li className="relative w-full" style={{ aspectRatio: "359 / 287" }}>
+    <Reveal
+      as="li"
+      variant="pop"
+      delay={delay}
+      className="relative w-full"
+      style={{ aspectRatio: "359 / 287" }}
+    >
       <FolderShape />
       <div
         className="relative flex h-full flex-col items-center justify-center text-center"
         style={{ padding: "16% 8% 6%" }}
       >
         <h3
-          className={`${bodyFont.className} m-0 text-[0.95rem] lg:text-[1.8cqw]`}
+          className={`${bodyFont.className} m-0 text-[0.75rem] sm:text-[0.9rem] lg:text-[1.8cqw]`}
           style={{
             lineHeight: 1.25,
             letterSpacing: "0.01em",
@@ -56,7 +72,7 @@ function EducationCard({ degree, detail }: { degree: string; detail: string }) {
           {degree}
         </h3>
         <p
-          className={`${serifFont.className} m-0 mt-2 text-[0.85rem] lg:mt-[0.9cqw] lg:text-[1.5cqw]`}
+          className={`${serifFont.className} m-0 mt-1 text-[0.7rem] sm:mt-2 sm:text-[0.85rem] lg:mt-[0.9cqw] lg:text-[1.5cqw]`}
           style={{
             letterSpacing: "0.06em",
             color: COLORS.white,
@@ -65,7 +81,7 @@ function EducationCard({ degree, detail }: { degree: string; detail: string }) {
           {detail}
         </p>
       </div>
-    </li>
+    </Reveal>
   );
 }
 
@@ -83,7 +99,9 @@ export default function AboutMe() {
       >
       {/* Newspaper-style title */}
       <div className="z-10 self-center lg:absolute lg:left-[3.9%] lg:top-[6%] lg:self-auto">
-        <NewspaperTitle text={t.about.title} />
+        <Reveal variant="pop">
+          <NewspaperTitle text={t.about.title} />
+        </Reveal>
       </div>
 
       {/* Intro text */}
@@ -95,27 +113,41 @@ export default function AboutMe() {
           className={`${serifFont.className} m-0 text-xl sm:text-2xl lg:text-[2.4cqw]`}
           style={{ lineHeight: 1.45, fontWeight: 400 }}
         >
-          {t.about.greeting}
+          <Typewriter text={t.about.greeting} speed={45} delay={300} />
           <br />
-          {t.about.tagline}
+          <Typewriter
+            text={t.about.tagline}
+            speed={40}
+            delay={300 + t.about.greeting.length * 45 + 200}
+          />
         </h2>
 
-        <p
+        <Reveal
+          as="p"
+          variant="left"
+          delay={200}
           className={`${bodyFont.className} m-0 mt-4 text-sm sm:text-base lg:mt-[2.6cqw] lg:text-[1.45cqw]`}
           style={{ lineHeight: 1.58 }}
         >
           {t.about.paragraph}
-        </p>
+        </Reveal>
 
-        <p
+        <Reveal
+          as="p"
+          variant="left"
+          delay={450}
           className={`${bodyFont.className} m-0 mt-4 text-sm font-bold sm:text-base lg:mt-[2.6cqw] lg:text-[1.45cqw]`}
           style={{ lineHeight: 1.58 }}
         >
           {t.about.motto}
-        </p>
+        </Reveal>
       </div>
 
-      <div className="relative mx-auto h-72 w-full max-w-sm sm:h-96 lg:absolute lg:bottom-0 lg:left-[38%] lg:mx-0 lg:h-[90%] lg:w-[35cqw] lg:max-w-none">
+      <Reveal
+        variant="up"
+        threshold={0.1}
+        className="relative mx-auto h-72 w-full max-w-sm sm:h-96 lg:absolute lg:bottom-0 lg:left-[38%] lg:mx-0 lg:h-[90%] lg:w-[35cqw] lg:max-w-none"
+      >
         <Image
           src={AVATAR_SRC}
           alt={t.about.avatarAlt}
@@ -123,26 +155,28 @@ export default function AboutMe() {
           sizes="(min-width: 1024px) 32vw, (min-width: 640px) 24rem, 90vw"
           className="object-contain object-bottom"
         />
-      </div>
+      </Reveal>
 
       {/* Education */}
       <div className="flex flex-col items-center lg:absolute lg:left-[72%] lg:top-[10%] lg:w-[25cqw]">
-        <h2
-          className={`${headingFont.className} m-0 text-2xl sm:text-3xl lg:text-[3cqw]`}
-          style={{
-            lineHeight: 1,
-            letterSpacing: "0.08em",
-            color: COLORS.heading,
-          }}
-        >
-          {t.about.education}
-        </h2>
+        <Reveal variant="right">
+          <h2
+            className={`${headingFont.className} m-0 text-2xl sm:text-3xl lg:text-[3cqw]`}
+            style={{
+              lineHeight: 1,
+              letterSpacing: "0.08em",
+              color: COLORS.heading,
+            }}
+          >
+            {t.about.education}
+          </h2>
+        </Reveal>
 
         <ul
-          className="m-0 mt-6 flex w-full max-w-sm list-none flex-col gap-4 p-0 lg:mt-[4cqw] lg:max-w-none lg:gap-[2cqw]"
+          className="m-0 mt-6 flex w-full max-w-[16rem] list-none flex-col gap-4 p-0 lg:mt-[4cqw] lg:max-w-none lg:gap-[2cqw]"
         >
-          {t.about.degrees.map((item) => (
-            <EducationCard key={item.degree} {...item} />
+          {t.about.degrees.map((item, i) => (
+            <EducationCard key={item.degree} {...item} delay={250 + i * 250} />
           ))}
         </ul>
       </div>

@@ -3,6 +3,8 @@
 import { FaGithub, FaLinkedinIn, FaEnvelope } from "react-icons/fa";
 import { useLanguage } from "../../i18n/LanguageProvider";
 import NewspaperTitle from "../../i18n/NewspaperTitle";
+import Reveal from "../ui/Reveal";
+import Typewriter from "../ui/Typewriter";
 
 const SOCIALS = [
   { label: "GitHub", href: "https://github.com/ariadna-ge", Icon: FaGithub },
@@ -43,7 +45,9 @@ export default function ContactMe() {
       >
       {/* Newspaper-style title */}
       <div className="z-10 self-center lg:absolute lg:left-[3.9%] lg:top-[6%] lg:self-auto">
-        <NewspaperTitle text={t.contact.title} />
+        <Reveal variant="pop">
+          <NewspaperTitle text={t.contact.title} />
+        </Reveal>
       </div>
 
       {/* Call to action + social links */}
@@ -55,9 +59,13 @@ export default function ContactMe() {
             color: COLORS.heading,
           }}
         >
-          {t.contact.cta[0]}
+          <Typewriter text={t.contact.cta[0]} speed={50} delay={300} />
           <br />
-          {t.contact.cta[1]}
+          <Typewriter
+            text={t.contact.cta[1]}
+            speed={40}
+            delay={300 + t.contact.cta[0].length * 50 + 200}
+          />
         </p>
 
         <ul
@@ -65,7 +73,14 @@ export default function ContactMe() {
           style={{ color: COLORS.text }}
         >
           {SOCIALS.map(({ label, href, Icon }, i) => (
-            <li key={label} className="flex items-center gap-3 sm:gap-5 lg:gap-[3cqw]">
+            <Reveal
+              as="li"
+              key={label}
+              variant="pop"
+              threshold={0}
+              delay={900 + i * 180}
+              className="flex items-center gap-3 sm:gap-5 lg:gap-[3cqw]"
+            >
               {i > 0 && <span aria-hidden="true">·</span>}
               <a
                 href={href}
@@ -76,7 +91,7 @@ export default function ContactMe() {
                 <Icon className="h-5 w-5 lg:h-[2.2cqw] lg:w-[2.2cqw]" aria-hidden="true" />
                 {label}
               </a>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>

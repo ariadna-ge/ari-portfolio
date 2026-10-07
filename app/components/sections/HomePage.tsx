@@ -3,6 +3,8 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useLanguage } from "../../i18n/LanguageProvider";
+import Reveal from "../ui/Reveal";
+import Typewriter from "../ui/Typewriter";
 
 const titleFont = { className: "font-[family-name:var(--font-boldonse)]" };
 const nameFont = { className: "font-[family-name:var(--font-fahkwang)]" };
@@ -89,14 +91,40 @@ export default function PortfolioHero() {
         >
           <span className="sr-only">{t.hero.portfolio}</span>
           <span aria-hidden="true" className="block">
-            PoRt
+            {"PoRt".split("").map((c, i) => (
+              <Reveal
+                key={i}
+                as="span"
+                variant="drop"
+                delay={i * 90}
+                threshold={0}
+                className="inline-block"
+              >
+                {c}
+              </Reveal>
+            ))}
           </span>
           <span aria-hidden="true" className="block">
-            folio
+            {"folio".split("").map((c, i) => (
+              <Reveal
+                key={i}
+                as="span"
+                variant="drop"
+                delay={400 + i * 90}
+                threshold={0}
+                className="inline-block"
+              >
+                {c}
+              </Reveal>
+            ))}
           </span>
         </h1>
 
-        <div className="relative aspect-square w-4/5 max-w-sm sm:max-w-md">
+        <Reveal
+          variant="pop"
+          delay={500}
+          className="relative aspect-square w-4/5 max-w-sm sm:max-w-md"
+        >
           <Image
             src={AVATAR_SRC}
             alt={t.hero.imageAlt}
@@ -105,13 +133,17 @@ export default function PortfolioHero() {
             sizes="(min-width: 640px) 28rem, 80vw"
             className="object-contain object-top"
           />
-        </div>
+        </Reveal>
 
         <p
           className={`${labelFont.className} m-0 text-xl tracking-wide sm:text-3xl`}
           style={{ color: COLORS.pink }}
         >
-          {t.hero.roleWords[0]} {t.hero.roleWords[1]}
+          <Typewriter
+            text={`${t.hero.roleWords[0]} ${t.hero.roleWords[1]}`}
+            delay={900}
+            speed={60}
+          />
         </p>
 
         <div
@@ -122,7 +154,11 @@ export default function PortfolioHero() {
             className={`${nameFont.className} m-0 text-xs uppercase tracking-[0.12em] sm:text-base`}
             style={{ color: COLORS.white }}
           >
-            Ariadna Denisse Garcia Estrada
+            <Typewriter
+              text="Ariadna Denisse Garcia Estrada"
+              delay={1800}
+              speed={55}
+            />
           </h2>
         </div>
       </div>
@@ -130,7 +166,10 @@ export default function PortfolioHero() {
       {/* Desktop: absolute composition scaled with the container */}
       <div className="hidden lg:block">
       {/* Image */}
-      <div
+      <Reveal
+        variant="zoom"
+        delay={500}
+        threshold={0}
         className="absolute"
         style={{ left: "42.7%", top: "13%", width: "44cqw", height: "44cqw" }}
       >
@@ -142,13 +181,17 @@ export default function PortfolioHero() {
           sizes="44vw"
           className="object-contain object-top"
         />
-      </div>
+      </Reveal>
       <h1 className={`${titleFont.className} absolute inset-0 z-10 m-0`}>
         <span className="sr-only">{t.hero.portfolio}</span>
         {TITLE_LETTERS.map((l, i) => (
-          <span
+          <Reveal
             key={i}
-            aria-hidden="true"
+            as="span"
+            aria-hidden={true}
+            variant="drop"
+            delay={i * 110}
+            threshold={0}
             className="absolute select-none"
             style={{
               left: `${l.left}%`,
@@ -159,7 +202,7 @@ export default function PortfolioHero() {
             }}
           >
             {l.char}
-          </span>
+          </Reveal>
         ))}
       </h1>
       <p
@@ -172,9 +215,13 @@ export default function PortfolioHero() {
         }}
       >
         <span className="sr-only">{t.hero.role}</span>
-        <VerticalWord word={t.hero.roleWords[0]} />
+        <Reveal as="span" variant="down" delay={900} threshold={0}>
+          <VerticalWord word={t.hero.roleWords[0]} />
+        </Reveal>
         <span style={{ marginTop: "13.5cqw" }}>
-          <VerticalWord word={t.hero.roleWords[1]} />
+          <Reveal as="span" variant="up" delay={1100} threshold={0} className="block">
+            <VerticalWord word={t.hero.roleWords[1]} />
+          </Reveal>
         </span>
       </p>
       <div
@@ -195,7 +242,11 @@ export default function PortfolioHero() {
             color: COLORS.white,
           }}
         >
-          Ariadna Denisse Garcia Estrada
+          <Typewriter
+            text="Ariadna Denisse Garcia Estrada"
+            delay={1600}
+            speed={55}
+          />
         </h2>
       </div>
       </div>
