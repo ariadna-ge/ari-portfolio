@@ -14,6 +14,7 @@ const es = {
     home: "Inicio",
     about: "Sobre mí",
     skills: "Habilidades",
+    projects: "Proyectos",
     contact: "Contacto",
   },
   hero: {
@@ -54,6 +55,13 @@ const es = {
   },
   projects: {
     title: "Proyectos",
+    carousel: "carrusel",
+    page: "página",
+    of: "de",
+    filterLabel: "Filtrar proyectos",
+    filters: { all: "Todos", live: "En línea", repo: "GitHub" },
+    prev: "Páginas anteriores",
+    next: "Páginas siguientes",
   },
   contact: {
     title: "Contáctame",
@@ -76,6 +84,7 @@ const en: Dictionary = {
     home: "Home",
     about: "About me",
     skills: "Skills",
+    projects: "Projects",
     contact: "Contact",
   },
   hero: {
@@ -116,6 +125,13 @@ const en: Dictionary = {
   },
   projects: {
     title: "Projects",
+    carousel: "carousel",
+    page: "page",
+    of: "of",
+    filterLabel: "Filter projects",
+    filters: { all: "All", live: "Live", repo: "GitHub" },
+    prev: "Previous pages",
+    next: "Next pages",
   },
   contact: {
     title: "Contact me",

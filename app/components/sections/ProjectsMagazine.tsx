@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLanguage } from "../../i18n/LanguageProvider";
+import type { Lang } from "../../i18n/translations";
 import NewspaperTitle from "../../i18n/NewspaperTitle";
 import {
   FaBorderAll,
@@ -12,9 +13,11 @@ import {
 } from "react-icons/fa";
 import type { IconType } from "react-icons";
 
+type Localized = Record<Lang, string>;
+
 export type Project = {
-  title: string;
-  category: string;
+  title: Localized;
+  category: Localized;
   year: string;
   image?: string;
   color?: string;
@@ -26,10 +29,10 @@ const projectUrl = (p: Project) => p.liveUrl ?? p.repoUrl;
 
 type Filter = "all" | "live" | "repo";
 
-const FILTERS: { id: Filter; label: string; Icon: IconType }[] = [
-  { id: "all", label: "Todos", Icon: FaBorderAll },
-  { id: "live", label: "En línea", Icon: FaGlobe },
-  { id: "repo", label: "GitHub", Icon: FaGithub },
+const FILTERS: { id: Filter; Icon: IconType }[] = [
+  { id: "all", Icon: FaBorderAll },
+  { id: "live", Icon: FaGlobe },
+  { id: "repo", Icon: FaGithub },
 ];
 
 const COLORS = {
@@ -53,7 +56,7 @@ export default function ProjectsMagazine({
   projects: allProjects,
   background = COLORS.bg,
 }: Props) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const [filter, setFilter] = useState<Filter>("all");
   const projects = useMemo(
@@ -150,7 +153,7 @@ export default function ProjectsMagazine({
   return (
     <section
       id="projects"
-      aria-roledescription="carrusel"
+      aria-roledescription={t.projects.carousel}
       aria-label={t.projects.title}
       tabIndex={0}
       onKeyDown={onKeyDown}
@@ -216,10 +219,10 @@ export default function ProjectsMagazine({
 
             return (
               <article
-                key={project.title}
+                key={project.title.es}
                 role="group"
-                aria-roledescription="página"
-                aria-label={`${project.title}, ${k + 1} de ${projects.length}`}
+                aria-roledescription={t.projects.page}
+                aria-label={`${project.title[lang]}, ${k + 1} ${t.projects.of} ${projects.length}`}
                 onClick={() => onPageClick(k)}
                 style={{
                   position: "absolute",
@@ -250,7 +253,7 @@ export default function ProjectsMagazine({
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={project.image}
-                      alt={project.title}
+                      alt={project.title[lang]}
                       draggable={false}
                       style={{
                         position: "absolute",
@@ -301,10 +304,10 @@ export default function ProjectsMagazine({
                       lineHeight: 1.1,
                     }}
                   >
-                    {project.title}
+                    {project.title[lang]}
                   </div>
                   <div style={{ fontSize: 13, marginTop: 4 }}>
-                    {project.category}, {project.year}
+                    {project.category[lang]}, {project.year}
                   </div>
                 </div>
               </article>
@@ -316,7 +319,7 @@ export default function ProjectsMagazine({
       {/* Filtro */}
       <div
         role="tablist"
-        aria-label="Filtrar proyectos"
+        aria-label={t.projects.filterLabel}
         style={{
           position: "absolute",
           bottom: "clamp(16px, 3vw, 40px)",
@@ -327,14 +330,14 @@ export default function ProjectsMagazine({
           zIndex: 200,
         }}
       >
-        {FILTERS.map(({ id, label, Icon }) => (
+        {FILTERS.map(({ id, Icon }) => (
           <button
             key={id}
             type="button"
             role="tab"
             aria-selected={filter === id}
-            aria-label={label}
-            title={label}
+            aria-label={t.projects.filters[id]}
+            title={t.projects.filters[id]}
             onClick={() => {
               setFilter(id);
               setIndex(0);
@@ -360,7 +363,7 @@ export default function ProjectsMagazine({
         type="button"
         onClick={() => go(index - 1)}
         disabled={index === 0}
-        aria-label="Páginas anteriores"
+        aria-label={t.projects.prev}
         className={`${NAV_BASE} left-4 md:left-[max(8px,calc(50%_-_var(--page-w)_*_1.02_-_60px))]`}
         style={navBtn(index === 0)}
       >
@@ -370,7 +373,7 @@ export default function ProjectsMagazine({
         type="button"
         onClick={() => go(index + 1)}
         disabled={index === maxIndex}
-        aria-label="Páginas siguientes"
+        aria-label={t.projects.next}
         className={`${NAV_BASE} right-4 md:right-[max(8px,calc(50%_-_var(--page-w)_*_1.02_-_60px))]`}
         style={navBtn(index === maxIndex)}
       >

@@ -5,7 +5,7 @@ import { FaBars } from "react-icons/fa";
 import { useLanguage } from "../../i18n/LanguageProvider";
 import { useDismiss } from "./useDismiss";
 
-const LINKS = ["home", "about", "skills", "contact"] as const;
+const LINKS = ["home", "about", "skills", "projects", "contact"] as const;
 
 export default function Menu() {
   const { t } = useLanguage();
