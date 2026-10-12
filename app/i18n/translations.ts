@@ -52,9 +52,14 @@ const es = {
       cloud: "Nube y Herramientas",
     },
   },
+  projects: {
+    title: "Proyectos",
+  },
   contact: {
     title: "Contáctame",
     cta: ["¡No seas tímido!", "Me encanta conocer gente nueva."] as [string, string],
+    cv: "Mi CV",
+    cvTitle: "Abrir mi CV en PDF",
   },
   footer: {
     motto: "Convirtamos las ideas en algo que valga la pena recordar",
@@ -109,9 +114,14 @@ const en: Dictionary = {
       cloud: "Cloud and Tools",
     },
   },
+  projects: {
+    title: "Projects",
+  },
   contact: {
     title: "Contact me",
     cta: ["Don’t be shy!", "I love meeting new people."],
+    cv: "My Resume",
+    cvTitle: "Open my Resume (PDF)",
   },
   footer: {
     motto: "Let’s turn ideas into something worth remembering",

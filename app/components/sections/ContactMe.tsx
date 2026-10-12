@@ -1,6 +1,6 @@
 "use client";
 
-import { FaGithub, FaLinkedinIn, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedinIn, FaEnvelope, FaBriefcase } from "react-icons/fa";
 import { useLanguage } from "../../i18n/LanguageProvider";
 import NewspaperTitle from "../../i18n/NewspaperTitle";
 import Reveal from "../ui/Reveal";
@@ -95,6 +95,46 @@ export default function ContactMe() {
           ))}
         </ul>
       </div>
+
+      {/* CV folder: fills the empty space beside the text and icons */}
+      <Reveal
+        variant="pop"
+        delay={1200}
+        threshold={0}
+        className="z-10 mx-auto w-44 sm:w-56 lg:absolute lg:left-[68%] lg:top-[36%] lg:mx-0 lg:w-[26cqw]"
+      >
+        <a
+          href="/cv.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          title={t.contact.cvTitle}
+          className="relative block w-full transition-transform hover:-rotate-2 hover:scale-105"
+          style={{ aspectRatio: "359 / 287" }}
+        >
+          <svg
+            viewBox="0 0 359 287"
+            className="absolute inset-0 h-full w-full"
+            aria-hidden="true"
+          >
+            <path
+              d="M0,30 Q0,0 30,0 L145,0 L180,36 L329,36 Q359,36 359,66 L359,257 Q359,287 329,287 L30,287 Q0,287 0,257 Z"
+              fill={COLORS.folder}
+            />
+          </svg>
+          <span
+            className={`${bodyFont.className} relative flex h-full flex-col items-center justify-center gap-2 pt-[10%] lg:gap-[1.2cqw]`}
+            style={{ color: COLORS.folderText }}
+          >
+            <FaBriefcase
+              className="h-12 w-12 sm:h-16 sm:w-16 lg:h-[9cqw] lg:w-[9cqw]"
+              aria-hidden="true"
+            />
+            <span className="text-base uppercase tracking-[0.12em] sm:text-xl lg:text-[2cqw]">
+              {t.contact.cv}
+            </span>
+          </span>
+        </a>
+      </Reveal>
       </div>
     </section>
   );
