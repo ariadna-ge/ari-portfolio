@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+ <div align="center">
 
-## Getting Started
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=24&duration=3000&pause=1000&color=FF79C6&center=true&vCenter=true&width=550&height=70&lines=%3E+My+Portfolio;Code+%26+Creativity+%E2%99%A1;Welcome+to+my+digital+space!" alt="Typing SVG" />
 
-First, run the development server:
+**Personal Portfolio · 2026**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A little space where technology meets creativity ♡
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  <a href="">
+    <img src="https://img.shields.io/badge/Live_Demo-FF79C6?style=flat-square&logo=googlechrome&logoColor=white" alt="Live Demo" />
+  </a>
+  <a href="https://github.com/ariadna-ge/ari-portfolio.git">
+    <img src="https://img.shields.io/badge/Source_Code-F8D7E8?style=flat-square&logo=github&logoColor=AD5783" alt="Source Code" />
+  </a>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+</div>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### ♡ About the Project
 
-To learn more about Next.js, take a look at the following resources:
+My personal portfolio showcases my journey in **Computer Engineering and Software Development**, highlighting my projects, technical skills, and experience.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ♡ Built With
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=nextjs,react,ts,css,git&theme=light" alt="Technologies" />
+</p>
 
-## Deploy on Vercel
+### ♡ Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Projects and technical skills showcase.
+- Professional experience and contact links.
+- User-focused interface and visual details.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+<div align="center">
+
+_“Where technology meets creativity.”_ ♡
+
+**Designed & developed by Ariadna**
+
+</div>
