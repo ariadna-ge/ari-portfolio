@@ -3,7 +3,10 @@ import type { Project } from "../components/sections/ProjectsMagazine";
 export const projects: Project[] = [
   {
     title: { es: "Varsa Studio", en: "Varsa Studio" },
-    category: { es: "Sitio web de agencia", en: "Agency website" },
+    category: {
+      es: "Desarrollo web · Sitio corporativo de agencia digital",
+      en: "Web development · Corporate website for a digital agency",
+    },
     year: "2026",
     image:
       "https://varsa-studio-content.nyc3.cdn.digitaloceanspaces.com/varsa-studio/images/content/Frame-14.png",
@@ -13,8 +16,8 @@ export const projects: Project[] = [
   {
     title: { es: "Lucid Locations", en: "Lucid Locations" },
     category: {
-      es: "Sitio web para locaciones de NY",
-      en: "Website for NY filming locations",
+      es: "Desarrollo web · Sitio para catálogo de locaciones en NY",
+      en: "Web development · Catalog site for NY locations",
     },
     year: "2026",
     image:
@@ -25,8 +28,8 @@ export const projects: Project[] = [
   {
     title: { es: "Ánimo Run Club", en: "Ánimo Run Club" },
     category: {
-      es: "Club de running, con tienda en línea",
-      en: "Running club with an online store",
+      es: "Desarrollo web · Sitio de marca con e-commerce (tienda en línea)",
+      en: "Web development · Brand website with e-commerce (online store)",
     },
     year: "2026",
     image:
@@ -37,8 +40,8 @@ export const projects: Project[] = [
   {
     title: { es: "App kotlin", en: "Kotlin app" },
     category: {
-      es: "App con conexión a base de datos de Firebase",
-      en: "App connected to a Firebase database",
+      es: "Desarrollo móvil · App Android en Kotlin con base de datos Firebase",
+      en: "Mobile development · Android app in Kotlin with Firebase database",
     },
     year: "2026",
     image:
@@ -49,8 +52,8 @@ export const projects: Project[] = [
   {
     title: { es: "Inventario de productos", en: "Product inventory" },
     category: {
-      es: "App local para inventario de productos",
-      en: "Local app for product inventory",
+      es: "Software de escritorio · Aplicación local de gestión de inventario",
+      en: "Desktop software · Local inventory management application",
     },
     year: "2025",
     image: "https://pinturasdoal.com/wp-content/uploads/Featured-Como-hacer-correctamente-un-inventario.jpg",
@@ -60,8 +63,8 @@ export const projects: Project[] = [
   {
     title: { es: "Sistema de inscripciones", en: "Enrollment system" },
     category: {
-      es: "Prototipo de sistema de inscripciones para cursos",
-      en: "Prototype of a course enrollment system",
+      es: "Desarrollo frontend · Prototipo de sistema de inscripción a cursos",
+      en: "Frontend development · Course enrollment system prototype",
     },
     year: "2025",
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHPbQXk61hI8a6A021KrzZyNOAjDxcJoF28Kfd2oyAUVg0jbC4Md7Y_1co&s=10",
@@ -71,8 +74,8 @@ export const projects: Project[] = [
   {
     title: { es: "Juegos en Unity", en: "Unity games" },
     category: {
-      es: "Juegos en Unity con C#",
-      en: "Unity games built with C#",
+      es: "Desarrollo de videojuegos · Juegos en Unity con C#",
+      en: "Game development · Unity games built with C#",
     },
     year: "2025",
     image: "https://avatars.githubusercontent.com/u/426196?s=200&v=4",
@@ -82,8 +85,8 @@ export const projects: Project[] = [
   {
     title: { es: "Página Web", en: "Web page" },
     category: {
-      es: "Sitio web como prototipo para el menú de un restaurante",
-      en: "Website prototype for a restaurant menu",
+      es: "Desarrollo web · Prototipo de sitio con menú digital para restaurante",
+      en: "Web development · Restaurant website prototype with digital menu",
     },
     year: "2024",
     image: "https://wp-otstatic.opentable.com/uploads/sites/432/2025/01/c18b14c64fa53cdf92142ebbe7cc6fdd.webp",
