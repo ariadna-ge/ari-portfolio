@@ -12,7 +12,7 @@ const serifFont = {
   className: "font-[family-name:var(--font-instrument-serif)]",
 };
 
-const AVATAR_SRC = "/images/avatar-thinking.png"; 
+const AVATAR_SRC = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/avatar-thinking.png`;
 
 const COLORS = {
   bg: "var(--color-1)",
