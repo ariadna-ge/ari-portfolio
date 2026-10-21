@@ -21,7 +21,7 @@ export default function LanguageSwitcher() {
         aria-expanded={open}
         aria-haspopup="true"
         onClick={() => setOpen((o) => !o)}
-        className="text-[var(--color-1)]"
+        className="flex h-9 w-9 items-center justify-center text-[var(--color-1)]"
       >
         <FaGlobe className="h-5 w-5 md:h-6 md:w-6" />
       </button>

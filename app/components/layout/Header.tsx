@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import Menu from "./Menu";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -18,10 +19,10 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full px-4 transition-[background-color,backdrop-filter] duration-300 ${
+      className={`sticky top-0 z-[1000] w-full px-4 transition-[background-color,backdrop-filter] duration-300 ${
         scrolled
-          ? "bg-[var(--color-6)]/75 backdrop-blur-md"
-          : "bg-[var(--color-6)]"
+          ? "bg-[var(--head-bg)]/75 backdrop-blur-md"
+          : "bg-[var(--head-bg)]"
       } py-3 md:px-8 md:py-4 lg:px-12`}>
       <div className="flex items-center justify-between">
         <Link
@@ -36,7 +37,8 @@ export default function Header() {
           </span>
         </Link>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 md:gap-2">
+          <ThemeToggle />
           <LanguageSwitcher />
           <Menu />
         </div>

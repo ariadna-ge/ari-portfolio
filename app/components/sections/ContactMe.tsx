@@ -13,19 +13,18 @@ const SOCIALS = [
     href: "https://www.linkedin.com/in/ariadna-ge",
     Icon: FaLinkedinIn,
   },
-  { label: "Email", href: "mailto:ariadna.denisse.g@gmail.com@gmail.com", Icon: FaEnvelope },
+  { label: "Email", href: "mailto:ariadna.denisse.g@gmail.com", Icon: FaEnvelope },
 ];
+
+const CV_HREF = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/cv.pdf`;
 
 const headingFont = { className: "font-[family-name:var(--font-boldonse)]" };
 const bodyFont = { className: "font-[family-name:var(--font-fahkwang)]" };
-const serifFont = {
-  className: "font-[family-name:var(--font-instrument-serif)]",
-};
 
 const COLORS = {
-  bg: "var(--color-1)",
-  text: "var(--color-3)",
-  heading: "var(--color-5)",
+  bg: "var(--sec-bg)",
+  text: "var(--sec-text)",
+  heading: "var(--sec-heading)",
   folder: "var(--color-3)",
   folderText: "var(--color-1)",
   white: "var(--white)",
@@ -104,7 +103,7 @@ export default function ContactMe() {
         className="z-10 mx-auto w-44 sm:w-56 lg:absolute lg:left-[68%] lg:top-[36%] lg:mx-0 lg:w-[26cqw]"
       >
         <a
-          href="/cv.pdf"
+          href={CV_HREF}
           target="_blank"
           rel="noopener noreferrer"
           title={t.contact.cvTitle}

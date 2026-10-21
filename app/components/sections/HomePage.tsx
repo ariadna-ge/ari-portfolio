@@ -15,7 +15,7 @@ const labelFont = {
 const AVATAR_SRC = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/avatar.png`;
 
 const COLORS = {
-  bg: "var(--color-6)",
+  bg: "var(--hero-bg)",
   dots: "var(--color-3)",
   pink: "var(--color-1)",
   white: "var(--white)",
@@ -155,7 +155,7 @@ export default function PortfolioHero() {
             style={{ color: COLORS.white }}
           >
             <Typewriter
-              text="Ariadna Denisse Garcia Estrada"
+              text="Ariadna Denisse García Estrada"
               delay={1800}
               speed={55}
             />
@@ -243,7 +243,7 @@ export default function PortfolioHero() {
           }}
         >
           <Typewriter
-            text="Ariadna Denisse Garcia Estrada"
+            text="Ariadna Denisse García Estrada"
             delay={1600}
             speed={55}
           />

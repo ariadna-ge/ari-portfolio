@@ -15,9 +15,9 @@ const serifFont = {
 const AVATAR_SRC = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/avatar-thinking.png`;
 
 const COLORS = {
-  bg: "var(--color-1)",
-  text: "var(--color-3)",
-  heading: "var(--color-5)",
+  bg: "var(--sec-bg)",
+  text: "var(--sec-text)",
+  heading: "var(--sec-heading)",
   folder: "var(--color-3)",
   folderText: "var(--color-1)",
   white: "var(--white)",

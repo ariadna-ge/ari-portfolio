@@ -11,6 +11,9 @@ const es = {
   menu: {
     open: "Abrir menú",
     language: "Idioma",
+    backToTop: "Volver arriba",
+    themeDark: "Cambiar a modo oscuro",
+    themeLight: "Cambiar a modo claro",
     home: "Inicio",
     about: "Sobre mí",
     skills: "Habilidades",
@@ -62,6 +65,8 @@ const es = {
     filters: { all: "Todos", live: "En línea", repo: "GitHub" },
     prev: "Páginas anteriores",
     next: "Páginas siguientes",
+    viewSite: "Ver sitio",
+    viewCode: "Ver código",
   },
   contact: {
     title: "Contáctame",
@@ -81,6 +86,9 @@ const en: Dictionary = {
   menu: {
     open: "Open menu",
     language: "Language",
+    backToTop: "Back to top",
+    themeDark: "Switch to dark mode",
+    themeLight: "Switch to light mode",
     home: "Home",
     about: "About me",
     skills: "Skills",
@@ -132,6 +140,8 @@ const en: Dictionary = {
     filters: { all: "All", live: "Live", repo: "GitHub" },
     prev: "Previous pages",
     next: "Next pages",
+    viewSite: "View site",
+    viewCode: "View code",
   },
   contact: {
     title: "Contact me",

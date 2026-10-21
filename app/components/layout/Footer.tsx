@@ -6,7 +6,7 @@ import { useLanguage } from "../../i18n/LanguageProvider";
 export default function Footer() {
   const { t } = useLanguage();
   return (
-    <footer className="w-full bg-[#5c1a3a] px-4 py-8 md:px-6 md:py-10 text-center text-white">
+    <footer className="w-full bg-[var(--foot-bg)] px-4 py-8 md:px-6 md:py-10 text-center text-white">
       <div className="mx-auto flex max-w-5xl flex-col items-center">
         <Laptop className="h-8 w-8 md:h-12 md:w-12" aria-hidden="true" />
         {/* Lema */}

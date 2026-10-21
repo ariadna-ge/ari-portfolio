@@ -9,6 +9,32 @@
   --color-6: #5e1838;
   --white: #fff;
   --black: #000;
+
+  /* Tema (claro por defecto) */
+  --sec-bg: var(--color-1);
+  --sec-text: var(--color-3);
+  --sec-heading: var(--color-5);
+  --skills-bg: #fff;
+  --skills-text: #404040;
+  --skills-icon: #8b3a62;
+  --hero-bg: var(--color-6);
+  --head-bg: var(--color-6);
+  --proj-bg: var(--color-3);
+  --foot-bg: #5c1a3a;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --sec-bg: #2a0d1c;
+  --sec-text: var(--color-1);
+  --sec-heading: var(--color-4);
+  --skills-bg: #1f0a15;
+  --skills-text: #f3d4e2;
+  --skills-icon: var(--color-1);
+  --hero-bg: #1f0813;
+  --head-bg: #1f0813;
+  --proj-bg: #3a1128;
+  --foot-bg: #14050c;
 }
 
 @theme inline {

@@ -18,6 +18,8 @@ type Localized = Record<Lang, string>;
 export type Project = {
   title: Localized;
   category: Localized;
+  description?: Localized;
+  metric?: Localized;
   year: string;
   image?: string;
   color?: string;
@@ -36,20 +38,25 @@ const FILTERS: { id: Filter; Icon: IconType }[] = [
 ];
 
 const COLORS = {
-  bg: "var(--color-3)",
+  bg: "var(--proj-bg)",
   text: "var(--color-1)",
   fallback: "var(--color-5)",
   shade: "var(--color-6)",
 };
 
 const PAGE_W = "clamp(150px, 34vw, 400px)";
+const PAGE_W_MOBILE = "min(84vw, 420px)";
+const MOBILE_QUERY = "(max-width: 767px)";
 
 type Props = {
   projects: Project[];
   background?: string;
 };
 
+// Sube las tarjetas para dejar espacio al texto, la etiqueta y el botón, sin tapar los filtros
+const CARD_SHIFT = 30;
 const DRAG_STEP = 110;
+const DRAG_STEP_MOBILE = 70;
 const VISIBLE_DEPTH = 3;
 
 export default function ProjectsMagazine({
@@ -71,8 +78,30 @@ export default function ProjectsMagazine({
     [allProjects, filter],
   );
 
-  const maxIndex = Math.max(projects.length - 2, 0);
-  const [index, setIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const pageW = isMobile ? PAGE_W_MOBILE : PAGE_W;
+  const maxIndex = Math.max(projects.length - (isMobile ? 1 : 2), 0);
+  const [rawIndex, setIndex] = useState(0);
+  const index = Math.min(rawIndex, maxIndex);
+
+  // Proyectos con texto visible: uno en móvil; dos páginas centrales en escritorio.
+  // offset = distancia horizontal del centro, en anchos de página (ver `x` de las tarjetas)
+  const infoItems = (
+    isMobile
+      ? [{ project: projects[index], offset: 0 }]
+      : [
+          { project: projects[index], offset: -0.52 },
+          { project: projects[index + 1], offset: 0.52 },
+        ]
+  ).filter((item) => item.project);
 
   const go = useCallback(
     (next: number) => setIndex(Math.min(Math.max(next, 0), maxIndex)),
@@ -105,7 +134,10 @@ export default function ProjectsMagazine({
     if (!d.active) return;
     const dx = e.clientX - d.startX;
     if (Math.abs(dx) > 6) d.moved = true;
-    go(d.startIndex - Math.round(dx / DRAG_STEP));
+    go(
+      d.startIndex -
+        Math.round(dx / (isMobile ? DRAG_STEP_MOBILE : DRAG_STEP)),
+    );
   };
 
   const endDrag = () => {
@@ -119,8 +151,9 @@ export default function ProjectsMagazine({
     const el = stageRef.current;
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
-      const delta =
-        Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      // Solo el gesto horizontal mueve el carrusel; el scroll vertical sigue de largo
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      const delta = e.deltaX;
       if (Math.abs(delta) < 12) return;
       e.preventDefault();
       if (wheelLock.current) return;
@@ -141,7 +174,10 @@ export default function ProjectsMagazine({
 
   const onPageClick = (k: number) => {
     if (drag.current.moved) return;
-    if (k === index || k === index + 1) {
+    if (isMobile) {
+      if (k === index) open(projects[k]);
+      else go(k);
+    } else if (k === index || k === index + 1) {
       open(projects[k]);
     } else if (k < index) {
       go(k);
@@ -160,13 +196,13 @@ export default function ProjectsMagazine({
       style={{
         position: "relative",
         width: "100%",
-        height: `calc(${PAGE_W} + 330px)`,
+        height: `calc(${pageW} + ${isMobile ? 500 : 470}px)`,
         overflow: "hidden",
         background,
         outlineOffset: -4,
         userSelect: "none",
         color: COLORS.text,
-        ["--page-w" as string]: PAGE_W,
+        ["--page-w" as string]: pageW,
       }}
     >
       <div
@@ -179,6 +215,18 @@ export default function ProjectsMagazine({
       >
         <NewspaperTitle text={t.projects.title} />
       </div>
+
+      <style>{`
+        .project-img { transition: transform 1100ms cubic-bezier(.22,1,.36,1); transform: scale(1.12); }
+        .project-img[data-center="true"] { transform: scale(1); }
+        .projects-stage { animation: projects-in 700ms cubic-bezier(.22,1,.36,1); }
+        @keyframes projects-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+        .project-info { animation: info-in 500ms ease 250ms both; }
+        @keyframes info-in { from { opacity: 0; margin-top: 10px; } to { opacity: 1; margin-top: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+          .project-img, .projects-stage, .project-info { transition: none; animation: none; }
+        }
+      `}</style>
 
       {/* Escenario 3D */}
       <div
@@ -198,6 +246,8 @@ export default function ProjectsMagazine({
         }}
       >
         <div
+          key={filter}
+          className="projects-stage"
           style={{
             position: "absolute",
             inset: 0,
@@ -207,15 +257,16 @@ export default function ProjectsMagazine({
           {projects.map((project, k) => {
             const d = k - index;
             const side = d <= 0 ? -1 : 1;
-            const n = side === -1 ? -d : d - 1;
-            const visible = n <= VISIBLE_DEPTH;
-            const isCenter = n === 0;
+            const n = isMobile ? Math.abs(d) : side === -1 ? -d : d - 1;
+            const visible = isMobile ? n <= 1 : n <= VISIBLE_DEPTH;
+            const isCenter = isMobile ? d === 0 : n === 0;
 
-            const x = side * (52 + n * 34);
-            const rotY = -side * (24 + Math.min(n, 3) * 6);
-            const rotZ = side * -1.5 + n * side * -0.6;
-            const z = -n * 140;
-            const y = n * -2;
+            // Móvil: una página a todo el ancho; las vecinas salen por los lados
+            const x = isMobile ? d * 112 : side * (52 + n * 34);
+            const rotY = isMobile ? 0 : -side * (24 + Math.min(n, 3) * 6);
+            const rotZ = isMobile ? 0 : side * -1.5 + n * side * -0.6;
+            const z = isMobile ? 0 : -n * 140;
+            const y = isMobile ? 0 : n * -2;
 
             return (
               <article
@@ -226,11 +277,11 @@ export default function ProjectsMagazine({
                 onClick={() => onPageClick(k)}
                 style={{
                   position: "absolute",
-                  top: "50%",
+                  top: `calc(50% - ${CARD_SHIFT}px)`,
                   left: "50%",
-                  width: PAGE_W,
+                  width: pageW,
                   aspectRatio: "1 / 1",
-                  transform: `translate(-50%, -50%) translate3d(${x}%, ${y}%, ${z}px) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`,
+                  transform: `translate(-50%, -50%) translate3d(${x}%, ${y}%, ${z}px) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${isCenter ? 1 : 0.94})`,
                   transition:
                     "transform 900ms cubic-bezier(.22,1,.36,1), opacity 600ms ease",
                   opacity: visible ? 1 : 0,
@@ -246,7 +297,12 @@ export default function ProjectsMagazine({
                     position: "absolute",
                     inset: 0,
                     overflow: "hidden",
+                    borderRadius: 16,
                     background: project.color ?? COLORS.fallback,
+                    boxShadow: isCenter
+                      ? "0 18px 40px rgba(0,0,0,0.35)"
+                      : "0 4px 12px rgba(0,0,0,0.15)",
+                    transition: "box-shadow 700ms ease",
                   }}
                 >
                   {project.image && (
@@ -255,6 +311,14 @@ export default function ProjectsMagazine({
                       src={project.image}
                       alt={project.title[lang]}
                       draggable={false}
+                      loading="lazy"
+                      className="project-img"
+                      data-center={isCenter}
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        // Si la imagen remota falla, queda el color de fondo
+                        e.currentTarget.style.display = "none";
+                      }}
                       style={{
                         position: "absolute",
                         inset: 0,
@@ -277,43 +341,94 @@ export default function ProjectsMagazine({
                   />
                 </div>
 
-                {/* Texto: solo visible mientras la página está al centro */}
-                <div
-                  aria-hidden={!isCenter}
-                  style={{
-                    position: "absolute",
-                    top: "100%",
-                    left: 0,
-                    right: 0,
-                    paddingTop: "clamp(10px, 1.5vw, 20px)",
-                    textAlign: "center",
-                    color: COLORS.text,
-                    opacity: isCenter ? 1 : 0,
-                    transform: isCenter ? "translateY(0)" : "translateY(-12px)",
-                    transition: isCenter
-                      ? "opacity 500ms ease 350ms, transform 500ms ease 350ms"
-                      : "opacity 200ms ease, transform 200ms ease",
-                    pointerEvents: "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "clamp(16px, 1.8vw, 26px)",
-                      fontWeight: 600,
-                      letterSpacing: "-0.02em",
-                      lineHeight: 1.1,
-                    }}
-                  >
-                    {project.title[lang]}
-                  </div>
-                  <div style={{ fontSize: 13, marginTop: 4 }}>
-                    {project.category[lang]}, {project.year}
-                  </div>
-                </div>
               </article>
             );
           })}
         </div>
+      </div>
+
+      {/* Texto: capa plana (sin 3D) para que el botón siempre reciba el mouse */}
+      <div
+        style={{
+          position: "absolute",
+          inset: "0 0 80px 0",
+          zIndex: 150,
+          pointerEvents: "none",
+        }}
+      >
+        {infoItems.map(({ project, offset }) => (
+          <div
+            key={`${filter}-${project.title.es}`}
+            className="project-info"
+            style={{
+              position: "absolute",
+              top: `calc(50% - ${CARD_SHIFT}px + ${pageW} / 2 + clamp(10px, 1.5vw, 20px))`,
+              left: `calc(50% + ${offset} * ${pageW})`,
+              width: pageW,
+              transform: "translateX(-50%)",
+              textAlign: "center",
+              color: COLORS.text,
+              pointerEvents: "none",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "clamp(16px, 1.8vw, 26px)",
+                fontWeight: 600,
+                letterSpacing: "-0.02em",
+                lineHeight: 1.1,
+              }}
+            >
+              {project.title[lang]}
+            </div>
+            <div style={{ fontSize: 12, marginTop: 2, opacity: 0.7 }}>
+              {project.year}
+            </div>
+            {project.description && (
+              <p
+                style={{
+                  fontSize: 13,
+                  lineHeight: 1.4,
+                  margin: "6px auto 0",
+                  maxWidth: "min(92%, 460px)",
+                  opacity: 0.9,
+                }}
+              >
+                {project.description[lang]}
+              </p>
+            )}
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 14,
+                marginTop: 10,
+              }}
+            >
+              {project.metric && (
+                <span style={TAG_STYLE}>{project.metric[lang]}</span>
+              )}
+              {projectUrl(project) && (
+                <a
+                  href={projectUrl(project)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity hover:opacity-70"
+                  style={{
+                    ...TAG_STYLE,
+                    textDecoration: "none",
+                    pointerEvents: "auto",
+                    cursor: "pointer",
+                  }}
+                >
+                  {project.liveUrl ? t.projects.viewSite : t.projects.viewCode}
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Filtro */}
@@ -348,7 +463,8 @@ export default function ProjectsMagazine({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              border: `2px solid ${COLORS.text}`,
+              borderRadius: 999,
+              border: `1.5px solid ${COLORS.text}`,
               background: filter === id ? COLORS.text : "transparent",
               color: filter === id ? background : COLORS.text,
               cursor: "pointer",
@@ -359,12 +475,14 @@ export default function ProjectsMagazine({
         ))}
       </div>
 
+      {!isMobile && (
+        <>
       <button
         type="button"
         onClick={() => go(index - 1)}
         disabled={index === 0}
         aria-label={t.projects.prev}
-        className={`${NAV_BASE} left-4 md:left-[max(8px,calc(50%_-_var(--page-w)_*_1.02_-_60px))]`}
+        className={`${NAV_BASE} left-2 md:left-[max(8px,calc(50%_-_var(--page-w)_*_1.02_-_60px))]`}
         style={navBtn(index === 0)}
       >
         <FaChevronLeft aria-hidden="true" />
@@ -374,25 +492,40 @@ export default function ProjectsMagazine({
         onClick={() => go(index + 1)}
         disabled={index === maxIndex}
         aria-label={t.projects.next}
-        className={`${NAV_BASE} right-4 md:right-[max(8px,calc(50%_-_var(--page-w)_*_1.02_-_60px))]`}
+        className={`${NAV_BASE} right-2 md:right-[max(8px,calc(50%_-_var(--page-w)_*_1.02_-_60px))]`}
         style={navBtn(index === maxIndex)}
       >
         <FaChevronRight aria-hidden="true" />
       </button>
+        </>
+      )}
     </section>
   );
 }
 
+const TAG_STYLE: React.CSSProperties = {
+  display: "inline-block",
+  padding: "6px 14px",
+  borderRadius: 999,
+  background: COLORS.text,
+  color: COLORS.bg,
+  fontSize: 12,
+  fontWeight: 700,
+  lineHeight: 1.2,
+};
+
 const NAV_BASE =
-  "absolute z-[200] flex h-11 w-11 items-center justify-center " +
-  "bottom-[clamp(16px,3vw,40px)] md:bottom-auto md:top-[calc((100%_-_80px)_/_2)] md:-translate-y-1/2";
+  "absolute z-[200] hidden h-11 w-11 items-center justify-center md:flex " +
+  "top-[calc((100%_-_80px)_/_2_-_30px)] -translate-y-1/2";
 
 function navBtn(disabled: boolean): React.CSSProperties {
   return {
-    border: `2px solid ${COLORS.text}`,
-    background: "transparent",
-    color: COLORS.text,
-    fontSize: 18,
+    border: "none",
+    borderRadius: "50%",
+    background: COLORS.text,
+    color: COLORS.bg,
+    fontSize: 16,
+    boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
     cursor: disabled ? "default" : "pointer",
     opacity: disabled ? 0.3 : 1,
   };

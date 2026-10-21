@@ -10,6 +10,7 @@ import {
   FaNodeJs,
   FaPython,
   FaJava,
+  FaPhp,
   FaDatabase,
   FaFigma,
   FaGitAlt,
@@ -77,6 +78,7 @@ const sections: Section[] = [
     techs: [
       { name: "Node.js", Icon: FaNodeJs },
       { name: "Express.js", Icon: SiExpress },
+      { name: "PHP", Icon: FaPhp },
       { name: "Python", Icon: FaPython },
       { name: "Java", Icon: FaJava },
       { name: "C#", Icon: TbBrandCSharp },
@@ -146,7 +148,7 @@ const COLORS = {
 export default function Skills() {
   const { t } = useLanguage();
   return (
-    <section id="skills" className="w-full bg-white px-4 py-12 sm:px-8 sm:py-16">
+    <section id="skills" className="w-full bg-[var(--skills-bg)] px-4 py-12 sm:px-8 sm:py-16">
       {/* Newspaper-style title */}
       <div className="mb-8 flex justify-center sm:mb-12">
         <Reveal variant="pop">
@@ -193,10 +195,10 @@ export default function Skills() {
                 >
                   <Icon
                     size={28}
-                    className="text-[#8B3A62]"
+                    className="text-[var(--skills-icon)]"
                     aria-hidden="true"
                   />
-                  <span className="text-[11px] font-medium text-neutral-700">
+                  <span className="text-[11px] font-medium text-[var(--skills-text)]">
                     {name}
                   </span>
                 </Reveal>
