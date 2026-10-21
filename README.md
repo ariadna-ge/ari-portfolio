@@ -6,7 +6,7 @@
 
 A little space where technology meets creativity ♡
 
-  <a href="">
+  <a href="https://ariadna-ge.github.io/ari-portfolio/">
     <img src="https://img.shields.io/badge/Live_Demo-FF79C6?style=flat-square&logo=googlechrome&logoColor=white" alt="Live Demo" />
   </a>
   <a href="https://github.com/ariadna-ge/ari-portfolio.git">
